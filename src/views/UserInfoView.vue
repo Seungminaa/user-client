@@ -95,6 +95,20 @@ export default{
         //서버에 해당 데이터를 삭제
         deleteInfo(user_id){
             console.log(user_id)
+            axios.delete('/api/user/' + user_id)
+            .then(res => {
+                //삭제를 배열의 첫번째 값으로 넘기니까 data 속성의 값이 나오지 않음
+                console.log(res)
+                if(res.data.affectedRows > 0){
+                    alert(`정상적으로 삭제되었습니다.`);
+                    // 보내는 것
+                    this.$router.push({ name: 'userList' });
+                }else{
+                    alert(`삭제되지 않았습니다.\n메세지 확인필요↓\n${res.data.message}`);
+                }
+            })
+            .catch(err => console.log(err))
+
         }
     }
 }
